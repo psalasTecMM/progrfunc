@@ -4,6 +4,7 @@ module Bool where
 import Prelude hiding (not,and,or)
 
 type Boolean = forall a. a->a->a
+
 -- >>> true 1 2
 -- 1
 true :: Boolean
@@ -17,6 +18,7 @@ false x y = y
 
 -- >>> bool false 1 2
 -- 2
+isbool :: Boolean -> Boolean
 isbool b = b true false
 
 -- >>> (not true) 1 2 

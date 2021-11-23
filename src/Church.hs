@@ -29,12 +29,16 @@ twice x y = x (x y)
 thrice :: ChurchNumeral
 thrice x y = x (x (x y))
 
-churchNumber :: Integer -> ChurchNumeral
-churchNumber 0 = \x y -> y
-churchNumber n = \x y -> x (churchNumber (n-1) x y)
 
--- >>> printChurch zero
--- 0
+-- >>> (churchNumber 101) not True
+-- False
+
+churchNumber :: Integer -> ChurchNumeral
+churchNumber 0 = \x y -> y -- Base
+churchNumber n = \x y -> x (churchNumber (n-1) x y) -- Recursivo
+
+-- >>> printChurch (churchNumber 20000000)
+-- 20000000
 printChurch :: ChurchNumeral -> Integer
 printChurch n = n (+ 1) 0
 
@@ -44,10 +48,12 @@ printChurch n = n (+ 1) 0
 sigma:: ChurchNumeral -> ChurchNumeral
 sigma n x y = x (n x y)
 
--- >>> printChurch (suma thrice (suma thrice twice))
+-- >>> printChurch (sumar thrice (sumar thrice twice))
 -- 8
-suma:: ChurchNumeral -> ChurchNumeral -> ChurchNumeral
-suma n m f y = n f (m f y)
+sumar:: ChurchNumeral -> ChurchNumeral -> ChurchNumeral
+sumar n m f y = n f (m f y)
+
+-- >>> printChurch (thrice + (thrice + twice))
 
 -- >>> printChurch (multi (churchNumber 20) thrice)
 -- 60
@@ -58,6 +64,10 @@ multi n m f = n (m f)
 -- >>> printChurch (twice . thrice)
 -- 6
 
+type Function = forall a. (a->a)
+type Arg = forall a. a
+
+bluebird :: Function -> Function -> a -> a
 bluebird f g a = f (g a)
 
 

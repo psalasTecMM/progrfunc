@@ -25,9 +25,13 @@ source-repository head
 
 library
   exposed-modules:
+      Arreglos
       Bool
+      Cadenas
       Church
+      Decisions
       Lib
+      Programas
   other-modules:
       Paths_progfunc
   hs-source-dirs:
